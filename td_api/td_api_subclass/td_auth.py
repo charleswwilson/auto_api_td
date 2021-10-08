@@ -1,15 +1,13 @@
 
-from pprint import pprint
+# from pprint import pprint
 import time
 import urllib
 import httpx
 import json
 import pickle
 from splinter import Browser
-from selenium import webdriver
-from config.td_config import TdConfig
-
-# from config.td_config import TdConfig
+# from selenium import webdriver
+from td_api.td_api_subclass.td_config import TdConfig
 
 
 class TD_Authorization:
@@ -44,8 +42,6 @@ class TD_Authorization:
         elif self.access_token['access_token_expires_at'] - 50 <= int(time.time()):
             self.o_auth_refresh()
         else:
-            #print(f"{self._access_token_dict['refresh_token_expires_at'] -int(time.time())} seconds to refresh token expiration")
-            #print(f"{self._access_token_dict['access_token_expires_at']-int(time.time())} seconds to access token expiration")
             print('Checking token status...')
 
     def gen_config(self):
@@ -94,11 +90,9 @@ class TD_Authorization:
         browser.find_by_id('accept').first.click()
         time.sleep(1)
         new_url = browser.url
-        # print(new_url)
         parse_url = urllib.parse.unquote(new_url.split('code=')[1])
         browser.quit()
         parse_url
-        # define the endpoint
         url = 'https://api.tdameritrade.com/v1/oauth2/token'
 
         headers = {'Content-Type': "application/x-www-form-urlencoded"}
@@ -108,19 +102,14 @@ class TD_Authorization:
                    'code': parse_url,
                    'client_id': self.config.api_key,
                    'redirect_uri': self.config.redirect_uri}
-        # post the data
 
         authReply = httpx.post(url, headers=headers, data=payload)
-        #print("type authreply",type(authReply))
         decoded_content = authReply.json()
-        #print("type decoded content",type(decoded_content))
         access_token_expires_at = int(time.time())+1800
         decoded_content.update({'refresh_token_created_at': int(time.time()),
                                 'refresh_token_expires_at': int(time.time())+7776000,
                                 'access_token_expires_at': access_token_expires_at})
-        #print(json.dumps(decoded_content, indent=4))
         _ = json.dumps(decoded_content, indent=4)
-        # print("json dumps type",type(_))
         self._access_token_dict = decoded_content
         pickle.dump(decoded_content, open(
             "config/auth_token.pickle", "wb"))
@@ -134,10 +123,8 @@ class TD_Authorization:
 
         payload = {'grant_type': 'refresh_token',
                    'refresh_token': self.access_token['refresh_token'],
-                   # 'code':parse_url,
                    'client_id': self.config_token.api_key,
                    'redirect_uri': self.config_token.redirect_uri}
-        # post the data
 
         authReply = httpx.post(url, headers=headers, data=payload)
 
@@ -150,5 +137,3 @@ class TD_Authorization:
         self._access_token_dict = decoded_content
         pickle.dump(decoded_content, open(
             "config/auth_token.pickle", "wb"))
-
-        # print(decoded_content)
