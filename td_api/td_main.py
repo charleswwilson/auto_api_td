@@ -7,9 +7,12 @@ import pickle
 
 
 class TdApi(TD_Authorization):
+    """ base class """
+    _main_url = "https://api.tdameritrade.com/v1/"
+
     def __init__(self):
         super().__init__()
-        self._main_url = "https://api.tdameritrade.com/v1/"
+        # self._main_url = "https://api.tdameritrade.com/v1/"
         self.Accounts = TdAccountInfo(self)
         self.Quotes = TdQuotes(self)
         self.Orders = TdOrders(self)
@@ -18,7 +21,7 @@ class TdApi(TD_Authorization):
         if attr == "access_token":
             return self._retrieve_access_token()
         elif attr == "login":
-            return self.td_login()
+            return self._td_login()
         elif attr == "headers":
             return self._set_header()
         elif attr == "config_token":

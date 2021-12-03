@@ -3,9 +3,11 @@ from config.objects import questions
 
 
 class TdConfig:
-    def __init__(self):
+    token_path = "./config_storage/token.pickle"
 
-        self.token_path = "./config_storage/token.pickle"
+    def __init__(self):
+        pass
+        #self.token_path = "./config_storage/token.pickle"
 
     def load_config_from_pickle(self):
         _ = pickle.load(open("config/config.pickle", "rb"))

@@ -33,21 +33,21 @@ class TD_Authorization:
             _ = pickle.load(open("config/auth_token.pickle", "rb"))
             return _
         except:
-            self.o_auth()
+            self._o_auth()
 
-    def td_login(self):
+    def _td_login(self):
         self._retrieve_access_token()
         if self.access_token['refresh_token_expires_at'] - 100 <= int(time.time()):
-            self.o_auth()
+            self._o_auth()
         elif self.access_token['access_token_expires_at'] - 50 <= int(time.time()):
-            self.o_auth_refresh()
+            self._o_auth_refresh()
         else:
             print('Checking token status...')
 
-    def gen_config(self):
+    def _gen_config(self):
         print('Configuring TD Ameritrade access')
 
-    def o_auth(self):
+    def _o_auth(self):
         print('Authenticating please wait...')
         self._check_config()
         executable_path = {'executable_path': r'/usr/bin/chromedriver'}
@@ -66,7 +66,7 @@ class TD_Authorization:
             print('The request was not successful!\nPlease check that you have chrome driver installed.\nAlso check to make sure you set the api key and \nredirect uri correctly from your td ameritrade\ndeveloper account.\n"')
             browser.quit()
             self.config.make_account()
-            self.o_auth()
+            self._o_auth()
         payload = {'username': self.config_token.account_number,
                    'password': self.config_token.password}
         browser.find_by_id("username0").first.fill(payload['username'])
@@ -115,7 +115,7 @@ class TD_Authorization:
             "config/auth_token.pickle", "wb"))
         return decoded_content
 
-    def o_auth_refresh(self):
+    def _o_auth_refresh(self):
         print('Obtaining a new token....')
         url = 'https://api.tdameritrade.com/v1/oauth2/token'
 

@@ -8,16 +8,16 @@ def test_attr_access_token():
     assert isinstance(p1.access_token, dict) == True
 
 
-def test_o_auth():
-    p1.o_auth()
-
-
 def test_o_auth_refresh():
-    p1.o_auth_refresh()
+    p1._o_auth_refresh()
+
+
+def test_o_auth():
+    p1._o_auth()
 
 
 def test_td_login():
-    p1.td_login()
+    p1._td_login()
 
 # account subclass
 
