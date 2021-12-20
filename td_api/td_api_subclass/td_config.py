@@ -55,8 +55,8 @@ class TdConfig:
         self.account_number = _['account_number']
         self.password = _['password']
         self.auth_questions = _['auth_questions']
-        if _['account_id']:
-            self.account_id = _['account_id']
+        # if _['account_id']:
+        #    self.account_id = _['account_id']
 
         return self
 
