@@ -1,4 +1,5 @@
 import pickle
+import os
 #from config.objects import questions
 
 
@@ -136,6 +137,10 @@ class TdConfig:
                                                  question4: question4_answer}
 
                               })
+        file_path = 'config'
+        if not os.path.exists(file_path):
+            os.makedirs(file_path)
+
         print(pickle_config)
         pickle.dump(pickle_config, open(
             "config/config.pickle", "wb"))
