@@ -19,7 +19,7 @@ class TdAccountInfo:
         if param:
             assert param in {"orders", "positions", "all"}
         if account_id == None:
-            account_id = self._parent.config_token.account_id[0]
+            account_id = self._parent.config_token.account_number
         endpoint = f"{self._parent._main_url}accounts/{account_id}"
         if param == "orders":
             payload = {
@@ -59,7 +59,7 @@ class TdAccountInfo:
         """
         self._parent.login
         if account_id == None:
-            account_id = self._parent.config_token.account_id[0]
+            account_id = self._parent.config_token.account_number
         endpoint = f"{self._parent._main_url}accounts/{account_id}"
         content = httpx.get(url=endpoint, headers=self._parent.headers)
         decoded_content = content.json()
@@ -80,7 +80,7 @@ class TdAccountInfo:
     def get_streamer_subscription_keys(self, account_id=None):
         self._parent.login
         if account_id == None:
-            account_id = self._parent.config_token.account_id[0]
+            account_id = self._parent.config_token.account_number
         endpoint = f"{self._parent._main_url}userprincipals/streamersubscriptionkeys"
         # headers_dec = {'Authorization': "Bearer {}".format(self.access_token['access_token']),
         #                "Content-Type": "application/json"}
@@ -104,7 +104,7 @@ class TdAccountInfo:
     def get_transactions(self, type=None, symbol=None, start_date=None, end_date=None, account_id=None):
         self._parent.login
         if not account_id:
-            account_id = self._parent.config_token.account_id[0]
+            account_id = self._parent.config_token.account_number
         endpoint = f"{self._parent._main_url}accounts/{account_id}/transactions"
         params = {
             "type": type,

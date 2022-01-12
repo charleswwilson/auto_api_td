@@ -13,7 +13,7 @@ class TdOrders:
 
     def get_orders_by_path(self, max_results=None, from_entered_datetime=None, to_entered_datetime=None, status=None, statuses=None):
         self._parent.login
-        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_id[0]}/orders"
+        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_number}/orders"
         params = {
             "maxResults": max_results,
             "fromEnteredTime": from_entered_datetime,
@@ -35,7 +35,7 @@ class TdOrders:
 
     def cancel_order(self, order_id):
         self._parent.login
-        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_id[0]}/orders/{order_id}"
+        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_number}/orders/{order_id}"
         content = httpx.delete(url=endpoint, headers=self._parent.headers)
         if content.status_code == 200:
             print(f"order {order_id} cancelled")
@@ -46,7 +46,7 @@ class TdOrders:
 
     def buy_market(self, symbol, quantity, session="NORMAL", duration="DAY"):
         self._parent.login
-        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_id[0]}/orders"
+        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_number}/orders"
         payload = {
             "orderType": "MARKET",
             "session": session,
@@ -71,7 +71,7 @@ class TdOrders:
 
     def buy_limit(self, symbol, quantity, price, session="NORMAL", duration="DAY"):
         self._parent.login
-        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_id[0]}/orders"
+        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_number}/orders"
         payload = {
             "orderType": "LIMIT",
             "session": session,
