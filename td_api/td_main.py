@@ -26,7 +26,9 @@ class TdApi(TD_Authorization):
             return self._set_header()
         elif attr == "config_token":
             return self.config.load_config_from_pickle()
-        elif attr == "config_token.account_id":
+        # elif attr == "config_token.account_id":
+        #    return self._get_account_id()
+        elif attr == "account_id":
             return self._get_account_id()
 
     def _set_header(self):

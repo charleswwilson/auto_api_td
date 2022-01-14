@@ -59,8 +59,9 @@ class TdAccountInfo:
         """
         self._parent.login
         if account_id == None:
-            account_id = self._parent.config_token.account_number
-        endpoint = f"{self._parent._main_url}accounts/{account_id}"
+            account_id = self._parent.account_id[0]
+        endpoint = f"{self._parent._main_url}accounts/{account_id}/preferences"
+        print(endpoint, self._parent.headers)
         content = httpx.get(url=endpoint, headers=self._parent.headers)
         decoded_content = content.json()
         return decoded_content
@@ -104,7 +105,7 @@ class TdAccountInfo:
     def get_transactions(self, type=None, symbol=None, start_date=None, end_date=None, account_id=None):
         self._parent.login
         if not account_id:
-            account_id = self._parent.config_token.account_number
+            account_id = self._parent.account_id[0]
         endpoint = f"{self._parent._main_url}accounts/{account_id}/transactions"
         params = {
             "type": type,

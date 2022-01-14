@@ -13,7 +13,7 @@ class TdOrders:
 
     def get_orders_by_path(self, max_results=None, from_entered_datetime=None, to_entered_datetime=None, status=None, statuses=None):
         self._parent.login
-        endpoint = f"{self._parent._main_url}accounts/{self._parent.config_token.account_number}/orders"
+        endpoint = f"{self._parent._main_url}accounts/{self._parent.account_id[0]}/orders"
         params = {
             "maxResults": max_results,
             "fromEnteredTime": from_entered_datetime,
